@@ -26,31 +26,24 @@ const connection = db.createConnection({
 for (const row of data) {
     const { DATA_EMISSAO, DATA_VENCIMENTO, DATA_PAGAMENTO, IDPESSOA, NRO_PARCELA, VALOR_JUROS, VALOR_MULTA, VALOR_DESCONTO, VALOR_TOTAL, VALOR_CONTA, HISTORICO, IDSTATUS, VALOR_PAGO, NUM_DOC } = row
 
-    const formatDate = (date) => {
-        /*const isoDate = new Date(date).toISOString();
-        const [year, month, day] = isoDate.substr(0, 10).split('-');
-        return `${year}-${month}-${day}`;*/
+    const data_emissao_formatada = new Date(DATA_EMISSAO)
+    const data_vencimento_formatada = new Date(DATA_VENCIMENTO)
+    const data_pagamento_formatada = new Date(DATA_PAGAMENTO)
 
-        for (let i = 0; i < data.length; i++) {
-            const dataExcel = data[i].dataExcel;
-            const dataJS = new Date((dataExcel - (25567 + 1)) * 86400 * 1000);
-            dados[i].dataJS = dataJS;
-        }
-    };
-
-    const DATA_EMISSAO_FORMATADA = formatDate(DATA_EMISSAO);
-    const DATA_VENCIMENTO_FORMATADA = formatDate(DATA_VENCIMENTO);
-    const DATA_PAGAMENTO_FORMATADA = formatDate(DATA_PAGAMENTO);
+    const DATA_EMISSAO_FORMATADA = data_emissao_formatada.toISOString().slice(0, 10)
+    const DATA_VENCIMENTO_FORMATADA = data_vencimento_formatada.toISOString().slice(0, 10)
+    const DATA_PAGAMENTO_FORMATADA = data_pagamento_formatada.toISOString().slice(0, 10)
 
     console.log({ DATA_EMISSAO_FORMATADA, DATA_VENCIMENTO_FORMATADA, DATA_PAGAMENTO_FORMATADA });
 
 
-    /*const sql = 'insert into contas_receber (DATA_EMISSAO, DATA_VENCIMENTO, DATA_PAGAMENTO, IDPESSOA, NRO_PARCELA, VALOR_JUROS, VALOR_MULTA, VALOR_DESCONTO, VALOR_TOTAL, VALOR_CONTA, HISTORICO, IDSTATUS, VALOR_PAGO, NUM_DOC) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
+    const sql = 'insert into contas_receber (DATA_EMISSAO, DATA_VENCIMENTO, DATA_PAGAMENTO, IDPESSOA, NRO_PARCELA, VALOR_JUROS, VALOR_MULTA, VALOR_DESCONTO, VALOR_TOTAL, VALOR_CONTA, HISTORICO, IDSTATUS, VALOR_PAGO, NUM_DOC) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
 
-    connection.execute(sql, [DATA_EMISSAO, DATA_VENCIMENTO, DATA_PAGAMENTO, IDPESSOA, NRO_PARCELA, VALOR_JUROS, VALOR_MULTA, VALOR_DESCONTO, VALOR_TOTAL, VALOR_CONTA, HISTORICO, IDSTATUS, VALOR_PAGO, NUM_DOC]);*/
+    connection.execute(sql, [DATA_EMISSAO_FORMATADA, DATA_VENCIMENTO_FORMATADA, DATA_PAGAMENTO_FORMATADA, IDPESSOA, NRO_PARCELA, VALOR_JUROS, VALOR_MULTA, VALOR_DESCONTO, VALOR_TOTAL, VALOR_CONTA, HISTORICO, IDSTATUS, VALOR_PAGO, NUM_DOC]);
 }
+
+console.log('Migrate sucess')
 
 connection.end()
 
 //console.log(data);
-
