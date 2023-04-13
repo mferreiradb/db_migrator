@@ -3,7 +3,7 @@ const xlsx = require('xlsx');
 const path = require('path');
 const connection = require('./db');
 
-const arquivoExcel = path.resolve(__dirname, 'test.xlsx')
+const arquivoExcel = path.resolve(__dirname, 'migrador.xlsx')
 const buffer = fs.readFileSync(arquivoExcel)
 const workbook = xlsx.read(buffer)
 const worksheet = workbook.Sheets[workbook.SheetNames[0]];
